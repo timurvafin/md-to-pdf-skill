@@ -1,0 +1,253 @@
+@page {
+  size: A4;
+  margin: 2cm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.65;
+  color: #1e293b;
+  max-width: 100%;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h1 {
+  font-size: 26pt;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 0;
+  padding-bottom: 0.2em;
+}
+
+/* Fallback for print where gradients on text may not work */
+@media print {
+  h1 {
+    background: none;
+    -webkit-text-fill-color: #4338ca;
+    color: #4338ca;
+  }
+}
+
+h2 {
+  font-size: 18pt;
+  color: #4338ca;
+  border-bottom: 2px solid #e0e7ff;
+  padding-bottom: 0.2em;
+}
+
+h3 {
+  font-size: 14pt;
+  color: #4f46e5;
+}
+
+h4 {
+  font-size: 12pt;
+  color: #6366f1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10pt;
+}
+
+/* Paragraphs */
+p {
+  margin: 0 0 0.9em;
+  orphans: 3;
+  widows: 3;
+}
+
+/* Links */
+a {
+  color: #6366f1;
+  text-decoration: underline;
+  text-decoration-color: #c7d2fe;
+  text-underline-offset: 2px;
+}
+
+@media print {
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #94a3b8;
+    word-break: break-all;
+  }
+}
+
+/* Code — inline */
+code {
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+  font-size: 0.88em;
+  background: #f1f5f9;
+  padding: 0.15em 0.45em;
+  border-radius: 5px;
+  color: #7c3aed;
+}
+
+/* Code — blocks (Catppuccin-inspired dark) */
+pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border-radius: 10px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 10pt;
+  line-height: 1.55;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  border: 1px solid #313244;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Syntax highlighting overrides for dark code blocks */
+pre .kw { color: #cba6f7; }  /* keywords */
+pre .dt { color: #f9e2af; }  /* data types */
+pre .st { color: #a6e3a1; }  /* strings */
+pre .co { color: #6c7086; font-style: italic; }  /* comments */
+pre .fu { color: #89b4fa; }  /* functions */
+pre .dv { color: #fab387; }  /* numbers */
+pre .op { color: #89dceb; }  /* operators */
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #818cf8;
+  background: #eef2ff;
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+  color: #312e81;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+blockquote p {
+  margin: 0.3em 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0.5em 0 1em;
+  padding-left: 1.6em;
+}
+
+li {
+  margin-bottom: 0.35em;
+}
+
+li::marker {
+  color: #6366f1;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2em 0;
+  font-size: 10.5pt;
+  border-radius: 8px;
+  overflow: hidden;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+thead {
+  background: #4338ca;
+  color: white;
+}
+
+th {
+  font-weight: 700;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #a78bfa, #c4b5fd);
+  border-radius: 2px;
+  margin: 2em 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.2em auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+figure {
+  margin: 1.5em 0;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+figcaption {
+  font-size: 0.9em;
+  color: #64748b;
+  margin-top: 0.5em;
+}
+
+/* TOC */
+nav#TOC {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.2em 1.5em;
+  margin-bottom: 2em;
+}
+
+nav#TOC a {
+  color: #4338ca;
+  text-decoration: none;
+}
+
+/* Print */
+@media print {
+  pre, table, figure, blockquote {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
