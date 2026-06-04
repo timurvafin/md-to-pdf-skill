@@ -28,12 +28,42 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob
 | Научные статьи, академические тексты | `academic` | `theme-academic.css` |
 | Тёмный режим / чтение с экрана | `dark` | `theme-dark.css` |
 | Чистый минималистичный вывод | `minimal` | `theme-minimal.css` |
+| **Фирменные документы КПМ** (КП, оценки, письма) | `kpm` | `theme-kpm.css` + `template-kpm.html` |
 | По умолчанию (если неясно) | `professional` | `theme-professional.css` |
 
 Если тема не указана явно — автоопределение по контенту:
 - Много блоков кода → `modern`
 - Формальный язык, цитаты, сноски → `academic`
+- Фирменные документы КПМ (КП, оценки, письма клиентам) → `kpm`
 - Во всех остальных случаях → `professional`
+
+### Тема `kpm` — дополнительные параметры
+
+Тема `kpm` использует кастомный HTML-шаблон и читает YAML frontmatter из markdown:
+
+```yaml
+---
+# Шапка (3 колонки: лого | заголовок | реквизиты)
+header-logo: /absolute/path/to/logo.svg
+header-title: "Оценка стоимости\n1 и 2 этапов дизайна сайта"
+header-company: |                            # опционально, есть дефолт
+  ООО «Казанская проектная мануфактура»
+  ОГРН 1241600035841
+
+# Водяной знак
+watermark-image: /absolute/path/to/mark.svg  # опционально
+watermark-position: bottom-right             # bottom-right | bottom-left | center
+watermark-opacity: "0.06"                    # по умолчанию 0.06
+watermark-size: 200px                        # по умолчанию 200px
+
+# Блок подписи (внизу документа, выравнивание вправо)
+signature-name: Мамаев Алексей Сергеевич     # опционально
+signature-title: Директор ООО «Казанская проектная мануфактура»
+signature-image: /path/to/signature.png      # опционально
+---
+```
+
+Если `header-logo` не указан — шапка не рендерится. Если `header-company` не указан — используются дефолтные реквизиты КПМ. Если `watermark-image` не указан — водяной знак не показывается. Если `signature-name` не указан — блок подписи не показывается.
 
 ### Шаг 3: Запустить конвертацию
 

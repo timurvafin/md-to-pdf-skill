@@ -1,0 +1,370 @@
+/* КПМ corporate theme — clean, monochrome, generous whitespace */
+/* Font: Onest (brand font). @font-face injected by convert.sh at runtime. */
+
+@page {
+  size: A4;
+  margin: 1.25cm 1.5cm 1cm 2cm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Onest", "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 9pt;
+  line-height: 1.6;
+  color: #1a1a1a;
+  max-width: 100%;
+}
+
+/* ===== Document header (3-column) ===== */
+
+.kpm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5em;
+  padding-bottom: 0;
+  border-bottom: none;
+  margin-bottom: 0.5cm;
+  font-size: 7pt;
+  line-height: 1.2;
+  color: #333;
+}
+
+.kpm-header-logo {
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+
+.kpm-header-logo img {
+  max-width: 192px;
+  height: auto;
+  display: block;
+  margin: -2em 0 0 0;
+}
+
+.kpm-header-title {
+  flex: 1 1 auto;
+  text-align: center;
+  color: #333;
+  align-self: flex-start;
+  padding-top: 0;
+}
+
+.kpm-header-company {
+  flex: 0 0 auto;
+  text-align: right;
+  white-space: pre-line;
+  align-self: flex-start;
+  padding-top: 0;
+  color: #333;
+}
+
+.kpm-header p,
+.kpm-header-title p,
+.kpm-header-company p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Headings ===== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Onest", "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+  line-height: 1.25;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h1 {
+  font-size: 22pt;
+  margin-top: 0;
+  padding-bottom: 0;
+  border: none;
+}
+
+h2 {
+  font-size: 16pt;
+  border: none;
+}
+
+h3 {
+  font-size: 13pt;
+}
+
+h4 {
+  font-size: 11pt;
+}
+
+/* ===== Paragraphs ===== */
+
+p {
+  margin: 0 0 0.8em;
+  orphans: 3;
+  widows: 3;
+}
+
+/* ===== Links ===== */
+
+a {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+@media print {
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #666;
+    word-break: break-all;
+  }
+}
+
+/* ===== Code — inline ===== */
+
+code {
+  font-family: "Fira Code", "JetBrains Mono", "Consolas", monospace;
+  font-size: 0.9em;
+  background: #f5f5f5;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  color: #333;
+}
+
+/* ===== Code — blocks ===== */
+
+pre {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 14px;
+  overflow-x: auto;
+  font-size: 9.5pt;
+  line-height: 1.5;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ===== Blockquotes ===== */
+
+blockquote {
+  border-left: 3px solid #ccc;
+  background: none;
+  margin: 1em 0;
+  padding: 0.4em 1.2em;
+  color: #444;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+blockquote p {
+  margin: 0.4em 0;
+}
+
+/* ===== Lists ===== */
+
+ul, ol {
+  margin: 0.5em 0 1em;
+  padding-left: 1.8em;
+}
+
+li {
+  margin-bottom: 0.3em;
+}
+
+li > ul, li > ol {
+  margin: 0.2em 0 0.2em;
+}
+
+/* ===== Bold paragraphs (subgroup headers like "Пользовательский маршрут") ===== */
+
+p > strong:only-child {
+  display: block;
+  margin: 0 0 10px 0;
+}
+
+/* ===== Tables — minimal horizontal lines ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 30px 0;
+  font-size: 9pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+thead {
+  background: none;
+  color: #1a1a1a;
+}
+
+th {
+  font-family: "Onest", "PT Sans", sans-serif;
+  font-weight: 700;
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 2px solid #333;
+}
+
+td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Right-align numeric columns (last column by convention) */
+td:last-child,
+th:last-child {
+  text-align: right;
+}
+
+/* Bold for totals row — use <strong> in markdown */
+td strong, th strong {
+  font-weight: 700;
+}
+
+tbody tr:nth-child(even) {
+  background: none;
+}
+
+/* ===== Horizontal rule ===== */
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 2em 0;
+}
+
+/* ===== Images ===== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.2em auto;
+}
+
+figure {
+  margin: 1.5em 0;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+figcaption {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 0.5em;
+}
+
+/* ===== Signature block ===== */
+
+.kpm-signature {
+  margin-top: 3em;
+  text-align: right;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.kpm-signature img {
+  display: inline-block;
+  max-height: 60px;
+  margin: 0 0 0.3em auto;
+}
+
+.kpm-signature-title {
+  font-size: 10pt;
+  color: #333;
+}
+
+.kpm-signature-name {
+  font-size: 10pt;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.kpm-signature-date {
+  font-size: 9pt;
+  color: #333;
+  margin-top: 0.3em;
+}
+
+/* ===== Watermark ===== */
+
+.kpm-watermark {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.kpm-watermark img {
+  margin: 0;
+}
+
+/* Positions */
+.kpm-watermark.bottom-right {
+  bottom: 20%;
+  right: 10%;
+}
+
+.kpm-watermark.bottom-left {
+  bottom: 1cm;
+  left: 1cm;
+}
+
+.kpm-watermark.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== Definition lists ===== */
+
+dt {
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-top: 0.8em;
+}
+
+dd {
+  margin-left: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* ===== Print optimizations ===== */
+
+@media print {
+  body {
+    font-size: 9pt;
+  }
+
+  pre, table, figure, blockquote {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}

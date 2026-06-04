@@ -29,7 +29,7 @@ Usage: $(basename "$0") -i INPUT.md [-o OUTPUT.pdf] [-t THEME] [-l]
 Options:
   -i FILE     Input Markdown file (required)
   -o FILE     Output PDF file (default: input name with .pdf extension)
-  -t THEME    Theme name: professional, modern, academic, dark, minimal
+  -t THEME    Theme name: professional, modern, academic, dark, minimal, kpm
               (default: professional)
   -l          Landscape orientation (default: portrait)
   -h          Show this help
@@ -115,12 +115,48 @@ convert_pandoc_chrome() {
     css_args+=(--css="$override_css")
   fi
 
+  # Use custom template for themes that need it (e.g. kpm)
+  local template_args=()
+  local template_file="$ASSETS_DIR/template-${THEME}.html"
+  if [ -f "$template_file" ]; then
+    template_args=(--template="$template_file")
+    log "Using custom template: template-${THEME}.html"
+  fi
+
+  # For kpm theme: generate @font-face CSS with absolute paths to Onest fonts
+  if [ "$THEME" = "kpm" ]; then
+    local font_dir=""
+    for candidate in \
+      "$(git -C "$input_dir" rev-parse --show-toplevel 2>/dev/null)/knowledge/brand/fonts/onest" \
+      "$HOME/Projects/work/mnf/_shared/manufactory/knowledge/brand/fonts/onest"; do
+      if [ -d "$candidate/WOFF" ]; then
+        font_dir="$candidate"
+        break
+      fi
+    done
+    if [ -n "$font_dir" ]; then
+      local font_css="${TMPDIR_PREFIX}-fonts.css"
+      CLEANUP_FILES+=("$font_css")
+      cat > "$font_css" <<FONTCSS
+@font-face { font-family: "Onest"; src: url("$font_dir/WOFF/OnestRegular1602-hint.woff") format("woff"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Onest"; src: url("$font_dir/WOFF/OnestMedium1602-hint.woff") format("woff"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Onest"; src: url("$font_dir/WOFF/OnestBold1602-hint.woff") format("woff"); font-weight: 700; font-style: normal; }
+@font-face { font-family: "Onest"; src: url("$font_dir/WOFF/OnestLight1602-hint.woff") format("woff"); font-weight: 300; font-style: normal; }
+FONTCSS
+      css_args=(--css="$font_css" "${css_args[@]}")
+      log "Onest fonts: $font_dir"
+    else
+      warn "Onest fonts not found — falling back to system sans-serif"
+    fi
+  fi
+
   pandoc -f gfm+hard_line_breaks+smart+definition_lists+implicit_figures "$input" \
     -o "$tmphtml" \
     --standalone \
     --embed-resources \
     --resource-path="$input_dir" \
     "${css_args[@]}" \
+    "${template_args[@]+"${template_args[@]}"}" \
     --highlight-style=kate \
     --metadata title=" " \
     2>&1 || error "pandoc conversion failed"
@@ -179,7 +215,7 @@ fi
 # Resolve theme CSS
 CSS_FILE="$ASSETS_DIR/theme-${THEME}.css"
 [ -f "$CSS_FILE" ] || error "Theme not found: $CSS_FILE
-Available themes: professional, modern, academic, dark, minimal"
+Available themes: professional, modern, academic, dark, minimal, kpm"
 
 # Check dependencies and run conversion
 check_dependencies

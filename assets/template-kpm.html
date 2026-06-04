@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style>
+    $styles.html()$
+  </style>
+$for(css)$
+  <link rel="stylesheet" href="$css$" />
+$endfor$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+
+$-- ===== КПМ Document Header (3-column) ===== --$
+$if(header-logo)$
+<div class="kpm-header">
+  <div class="kpm-header-logo">
+    <img src="$header-logo$" alt="КПМ" />
+  </div>
+  $if(header-title)$
+  <div class="kpm-header-title">
+    $header-title$
+  </div>
+  $endif$
+  <div class="kpm-header-company">$if(header-company)$$header-company$$else$Общество с ограниченной ответственностью
+«Казанская проектная мануфактура»
+ОГРН 1241600035841
+ИНН/КПП 1685017540/168501001
+Р/С 40702810310001652839 В АО «ТБАНК»
+К/С 30101810145250000974$endif$</div>
+</div>
+$endif$
+
+$-- ===== Main content ===== --$
+$body$
+
+$-- ===== Signature block ===== --$
+$if(signature-name)$
+<div class="kpm-signature">
+  $if(signature-image)$
+  <img src="$signature-image$" alt="Подпись" />
+  $endif$
+  $if(signature-title)$
+  <div class="kpm-signature-title">$signature-title$</div>
+  $endif$
+  <div class="kpm-signature-name">$signature-name$</div>
+  $if(signature-date)$
+  <div class="kpm-signature-date">$signature-date$</div>
+  $endif$
+</div>
+$endif$
+
+$-- ===== Watermark ===== --$
+$if(watermark-image)$
+<div class="kpm-watermark $if(watermark-position)$$watermark-position$$else$bottom-right$endif$"
+     style="opacity: $if(watermark-opacity)$$watermark-opacity$$else$0.06$endif$;">
+  <img src="$watermark-image$"
+       alt=""
+       style="$if(watermark-size)$width: $watermark-size$$else$width: 200px$endif$; height: auto;" />
+</div>
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>
