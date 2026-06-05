@@ -117,6 +117,7 @@ convert_pandoc_chrome() {
 
   # Use custom template for themes that need it (e.g. kpm)
   local template_args=()
+  local meta_args=()
   local template_file="$ASSETS_DIR/template-${THEME}.html"
   if [ -f "$template_file" ]; then
     template_args=(--template="$template_file")
@@ -126,9 +127,11 @@ convert_pandoc_chrome() {
   # For kpm theme: generate @font-face CSS with absolute paths to Onest fonts
   if [ "$THEME" = "kpm" ]; then
     local font_dir=""
+    # Fonts ship with the skill (assets/fonts) so the theme is self-contained.
+    # Fall back to the monorepo copy when converting a file inside it.
     for candidate in \
-      "$(git -C "$input_dir" rev-parse --show-toplevel 2>/dev/null)/knowledge/brand/fonts/onest" \
-      "$HOME/Projects/work/mnf/_shared/manufactory/knowledge/brand/fonts/onest"; do
+      "$ASSETS_DIR/fonts/onest" \
+      "$(git -C "$input_dir" rev-parse --show-toplevel 2>/dev/null)/knowledge/brand/fonts/onest"; do
       if [ -d "$candidate/WOFF" ]; then
         font_dir="$candidate"
         break
@@ -148,6 +151,22 @@ FONTCSS
     else
       warn "Onest fonts not found — falling back to system sans-serif"
     fi
+
+    # Brand images (logo, watermark) ship with the skill. If the document's
+    # frontmatter omits the path or points to a file that doesn't exist on this
+    # machine (e.g. an absolute path from another user), fall back to the bundled
+    # asset via --metadata (which overrides the document's YAML).
+    local fm_logo fm_wm
+    fm_logo=$(awk '/^---[[:space:]]*$/{d++; next} d==1 && /^header-logo:/{sub(/^header-logo:[[:space:]]*/,""); sub(/[[:space:]]+$/,""); print; exit}' "$input")
+    if { [ -z "$fm_logo" ] || [ ! -f "$fm_logo" ]; } && [ -f "$ASSETS_DIR/brand/logo_black_rgb.png" ]; then
+      meta_args+=(--metadata "header-logo=$ASSETS_DIR/brand/logo_black_rgb.png")
+      log "Brand logo: bundled asset"
+    fi
+    fm_wm=$(awk '/^---[[:space:]]*$/{d++; next} d==1 && /^watermark-image:/{sub(/^watermark-image:[[:space:]]*/,""); sub(/[[:space:]]+$/,""); print; exit}' "$input")
+    if { [ -z "$fm_wm" ] || [ ! -f "$fm_wm" ]; } && [ -f "$ASSETS_DIR/brand/sign_black_rgb_mirror.png" ]; then
+      meta_args+=(--metadata "watermark-image=$ASSETS_DIR/brand/sign_black_rgb_mirror.png")
+      log "Brand watermark: bundled asset"
+    fi
   fi
 
   pandoc -f gfm+hard_line_breaks+smart+definition_lists+implicit_figures "$input" \
@@ -157,6 +176,7 @@ FONTCSS
     --resource-path="$input_dir" \
     "${css_args[@]}" \
     "${template_args[@]+"${template_args[@]}"}" \
+    "${meta_args[@]+"${meta_args[@]}"}" \
     --highlight-style=kate \
     --metadata title=" " \
     2>&1 || error "pandoc conversion failed"
