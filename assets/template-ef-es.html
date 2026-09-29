@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>$if(doc-title)$$doc-title$$else$$pagetitle$$endif$</title>
+$for(css)$
+  <link rel="stylesheet" href="$css$" />
+$endfor$
+  <style>
+    /* Бегущие колонтитулы: значения из frontmatter */
+    @page {
+      @top-right {
+        content: "$if(doc-ref)$$doc-ref$$else$$doc-title$$endif$";
+      }
+      @bottom-left {
+        content: "$for(footer-sign)$$footer-sign$ ____________$sep$      $endfor$";
+      }
+      @bottom-right {
+        content: "$if(doc-ref)$$doc-ref$ · $else$$if(doc-title)$$doc-title$ · $endif$$endif$" counter(page, decimal-leading-zero) " / " counter(pages, decimal-leading-zero);
+      }
+    }
+    /* Первая страница — большая шапка в потоке, бегущей нет (правило должно идти после @page выше) */
+    @page :first {
+      @top-left { content: none; border: none; background: none; }
+      @top-center { content: none; border: none; }
+      @top-right { content: none; border: none; }
+    }
+  </style>
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body class="num-$if(numbering)$$numbering$$else$clauses$endif$">
+
+$-- ===== Шапка первой страницы: знак + название | контакты ===== --$
+<header class="efes-head">
+  <div class="efes-brand">
+    <div class="efes-mark"><i></i><i></i></div>
+    <div>
+      <div class="efes-name">Эф-эс</div>
+      <div class="efes-tagline">$if(header-tagline)$$header-tagline$$else$Разработка веб-систем$endif$</div>
+    </div>
+  </div>
+  <div class="efes-contacts">$if(header-contacts)$$header-contacts$$else$info@ef-es.ru<br />ef-es.ru<br />420015, Казань, ул. Пушкина, 46$endif$</div>
+</header>
+<div class="efes-rule"></div>
+
+$-- ===== Заголовочный блок документа ===== --$
+$if(doc-title)$
+<div class="efes-titleblock">
+  $if(doc-kicker)$
+  <div class="efes-kicker"><span></span>$doc-kicker$</div>
+  $endif$
+  <h1 class="efes-title">$doc-title$</h1>
+  $if(doc-subtitle)$
+  <p class="efes-subtitle">$doc-subtitle$</p>
+  $endif$
+  $if(doc-city)$
+  <div class="efes-meta"><span>$doc-city$</span><span>$doc-date$</span></div>
+  $else$
+  $if(doc-date)$
+  <div class="efes-meta"><span></span><span>$doc-date$</span></div>
+  $endif$
+  $endif$
+</div>
+$endif$
+
+$-- ===== Основной текст ===== --$
+<main class="efes-body">
+$body$
+
+$-- ===== Реквизиты и подписи сторон ===== --$
+$if(parties)$
+<section class="efes-parties">
+  <h2>$if(parties-title)$$parties-title$$else$Реквизиты и подписи сторон$endif$</h2>
+  <div class="efes-parties-grid">
+    $for(parties)$
+    <div class="efes-party">
+      <div class="efes-party-role">$it.role$</div>
+      <div class="efes-party-name">$it.name$</div>
+      $if(it.details)$
+      <div class="efes-req">
+        $for(it.details)$
+        <span class="k">$it.k$</span><span>$it.v$</span>
+        $endfor$
+      </div>
+      $endif$
+      $if(it.signer-title)$
+      <div class="efes-signer-title">$it.signer-title$</div>
+      $endif$
+      <div class="efes-sign-line"><div></div><span>$it.signer-name$</span></div>
+    </div>
+    $endfor$
+  </div>
+</section>
+$endif$
+</main>
+
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>

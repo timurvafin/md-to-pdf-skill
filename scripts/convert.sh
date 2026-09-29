@@ -29,7 +29,7 @@ Usage: $(basename "$0") -i INPUT.md [-o OUTPUT.pdf] [-t THEME] [-l]
 Options:
   -i FILE     Input Markdown file (required)
   -o FILE     Output PDF file (default: input name with .pdf extension)
-  -t THEME    Theme name: professional, modern, academic, dark, minimal, kpm
+  -t THEME    Theme name: professional, modern, academic, dark, minimal, kpm, ef-es
               (default: professional)
   -l          Landscape orientation (default: portrait)
   -h          Show this help
@@ -169,6 +169,12 @@ FONTCSS
     fi
   fi
 
+  # ef-es: metadata goes into CSS content strings (running header/footer) — no line wrapping
+  local wrap_args=()
+  if [ "$THEME" = "ef-es" ]; then
+    wrap_args=(--wrap=none)
+  fi
+
   pandoc -f gfm+hard_line_breaks+smart+definition_lists+implicit_figures "$input" \
     -o "$tmphtml" \
     --standalone \
@@ -177,6 +183,7 @@ FONTCSS
     "${css_args[@]}" \
     "${template_args[@]+"${template_args[@]}"}" \
     "${meta_args[@]+"${meta_args[@]}"}" \
+    "${wrap_args[@]+"${wrap_args[@]}"}" \
     --highlight-style=kate \
     --metadata title=" " \
     2>&1 || error "pandoc conversion failed"
@@ -235,7 +242,7 @@ fi
 # Resolve theme CSS
 CSS_FILE="$ASSETS_DIR/theme-${THEME}.css"
 [ -f "$CSS_FILE" ] || error "Theme not found: $CSS_FILE
-Available themes: professional, modern, academic, dark, minimal, kpm"
+Available themes: professional, modern, academic, dark, minimal, kpm, ef-es"
 
 # Check dependencies and run conversion
 check_dependencies

@@ -1,0 +1,380 @@
+/* Эф-эс — фирменный бланк (по макету договора ef-es-docs/04-dogovor.html) */
+/* Шрифты: Inter + IBM Plex Mono, лежат в assets/fonts/ef-es (OFL). */
+
+@font-face { font-family: "EfesInter"; src: url("fonts/ef-es/Inter-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "EfesInter"; src: url("fonts/ef-es/Inter-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "EfesInter"; src: url("fonts/ef-es/Inter-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "EfesInter"; src: url("fonts/ef-es/Inter-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; }
+@font-face { font-family: "EfesMono"; src: url("fonts/ef-es/IBMPlexMono-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "EfesMono"; src: url("fonts/ef-es/IBMPlexMono-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; }
+
+:root {
+  --accent: #1F4FE0;
+  --ink: #080B14;
+  --text: #1A202B;
+  --text-2: #3A4250;
+  --muted: #5B6472;
+  --muted-2: #6B7380;
+  --line: #E4E9EF;
+  --subtle: #F5F7F9;
+  --mark: #0E1620;
+  --sans: "EfesInter", "Inter", system-ui, sans-serif;
+  --mono: "EfesMono", "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* ===== Страница и колонтитулы ===== */
+/* Макет: A4 = 794×1123 px, поля 72px, шапка 2+ страниц — 40px сверху, футер — 40px снизу. */
+
+@page {
+  size: A4;
+  margin: 112px 72px 92px 72px;
+
+  @top-left {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'><rect width='26' height='26' rx='6' fill='%230E1620'/><rect x='7.5' y='7' width='4' height='12' rx='1' fill='%231F4FE0'/><rect x='14.5' y='7' width='4' height='12' rx='1' fill='%23ffffff'/></svg>") "  Эф-эс";
+    white-space: pre;
+    font-family: "EfesInter", "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #080B14;
+    vertical-align: top;
+    padding-top: 40px;
+    border-bottom: 1px solid #E4E9EF;
+    background: linear-gradient(#1F4FE0, #1F4FE0) left bottom / 56px 2px no-repeat;
+    margin-bottom: 28px;
+  }
+  @top-center {
+    content: "";
+    border-bottom: 1px solid #E4E9EF;
+    margin-bottom: 28px;
+  }
+  @top-right {
+    font-family: "EfesMono", "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    color: #5B6472;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 47px;
+    border-bottom: 1px solid #E4E9EF;
+    margin-bottom: 28px;
+  }
+
+  @bottom-left {
+    white-space: pre;
+    font-family: "EfesMono", "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: #6B7380;
+    vertical-align: top;
+    padding-top: 14px;
+    border-top: 1px solid #E4E9EF;
+    margin-top: 24px;
+  }
+  @bottom-center {
+    content: "";
+    border-top: 1px solid #E4E9EF;
+    margin-top: 24px;
+  }
+  @bottom-right {
+    font-family: "EfesMono", "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: #080B14;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 14px;
+    border-top: 1px solid #E4E9EF;
+    margin-top: 24px;
+  }
+}
+
+/* Первая страница: большая шапка в потоке документа, бегущей шапки нет */
+@page :first {
+  margin-top: 40px;
+  @top-left { content: none; }
+  @top-center { content: none; }
+  @top-right { content: none; }
+}
+
+* { box-sizing: border-box; }
+
+html, body { background: #fff; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-wrap: pretty;
+  font-feature-settings: "cv11";
+}
+
+/* ===== Шапка первой страницы ===== */
+
+.efes-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.efes-brand { display: flex; align-items: center; gap: 12px; }
+
+.efes-mark {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--mark);
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.efes-mark i { display: block; width: 5px; height: 16px; border-radius: 1px; background: #fff; }
+.efes-mark i:first-child { background: var(--accent); }
+
+.efes-name { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: var(--ink); }
+
+.efes-tagline {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.efes-contacts {
+  font-family: var(--mono);
+  font-size: 10.5px; line-height: 1.65;
+  color: var(--muted);
+  text-align: right;
+}
+.efes-contacts p { margin: 0; }
+.efes-contacts a { color: inherit; }
+
+.efes-rule {
+  height: 2px;
+  margin-top: 20px;
+  background:
+    linear-gradient(var(--accent), var(--accent)) left top / 56px 2px no-repeat,
+    linear-gradient(var(--line), var(--line)) left center / 100% 1px no-repeat;
+}
+
+/* ===== Заголовочный блок ===== */
+
+.efes-titleblock { padding-top: 32px; }
+
+.efes-kicker {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent);
+}
+.efes-kicker span { display: block; width: 20px; height: 1px; background: var(--accent); }
+
+h1.efes-title {
+  margin: 0;
+  font-size: 28px; line-height: 1.15; font-weight: 600; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.efes-subtitle { margin: 6px 0 0; font-size: 14px; color: var(--text-2); }
+
+.efes-meta {
+  display: flex; justify-content: space-between;
+  margin-top: 20px; padding: 10px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; color: var(--text-2);
+}
+
+.efes-body { padding-top: 18px; }
+.efes-rule + .efes-body { padding-top: 32px; }
+
+/* ===== Текст ===== */
+
+p { margin: 0 0 8px; orphans: 3; widows: 3; }
+
+strong, b { font-weight: 600; }
+
+a { color: var(--accent); text-decoration: none; }
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  font-weight: 600;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.efes-body h1 { font-size: 22px; line-height: 1.2; letter-spacing: -0.02em; margin: 28px 0 12px; }
+.efes-body h2 { font-size: 15px; line-height: 1.4; margin: 24px 0 10px; }
+.efes-body h3 { font-size: 13px; line-height: 1.4; margin: 16px 0 6px; }
+.efes-body h4 { font-size: 12.5px; line-height: 1.4; margin: 12px 0 4px; }
+.efes-body > :first-child { margin-top: 0; }
+
+/* ===== Нумерация: разделы «01», пункты «1.1» ===== */
+
+body { counter-reset: efes-sec; }
+
+body.num-clauses .efes-body h2,
+body.num-sections .efes-body h2 {
+  counter-increment: efes-sec;
+  counter-reset: efes-clause;
+}
+
+body.num-clauses .efes-body h2::before,
+body.num-sections .efes-body h2::before {
+  content: counter(efes-sec, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 400;
+  color: var(--accent);
+  margin-right: 12px;
+}
+
+body.num-clauses .efes-body h2 ~ p {
+  counter-increment: efes-clause;
+}
+body.num-clauses .efes-body h2 ~ p::before {
+  content: counter(efes-sec) "." counter(efes-clause);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-right: 8px;
+}
+
+/* ===== Код / моно ===== */
+
+code {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+  background: none;
+  padding: 0;
+}
+
+pre {
+  font-family: var(--mono);
+  font-size: 11px; line-height: 1.55;
+  background: var(--subtle);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0 12px;
+  white-space: pre-wrap;
+  break-inside: avoid;
+}
+pre code { font-size: inherit; }
+
+/* ===== Таблицы ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 8px 10px;
+  border-bottom: 1.5px solid var(--ink);
+  vertical-align: bottom;
+}
+
+td {
+  padding: 8px 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px; line-height: 1.45;
+  vertical-align: top;
+}
+
+tr { break-inside: avoid; page-break-inside: avoid; }
+
+/* `01` в первой колонке — синий моно-номер строки */
+td:first-child code { color: var(--accent); }
+td code { white-space: nowrap; }
+
+/* Итоговая строка: последняя строка с **жирным**, где первая ячейка пустая или сама **жирная** («**Итого**») */
+tbody tr:last-child:is(:has(> td:first-child:empty), :has(> td:first-child > strong:only-child)):has(strong) td {
+  border-bottom: none;
+  background: var(--subtle);
+  font-weight: 600;
+  padding-top: 12px; padding-bottom: 12px;
+}
+
+/* ===== Списки ===== */
+
+ul, ol { margin: 0 0 8px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+li > ul, li > ol { margin: 4px 0 0; }
+ul > li::marker { color: var(--accent); }
+ol > li::marker { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* ===== Цитата / выноска ===== */
+
+blockquote {
+  margin: 10px 0 14px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--accent);
+  background: var(--subtle);
+  color: var(--text-2);
+  break-inside: avoid;
+}
+blockquote p { margin: 0 0 6px; }
+blockquote p:last-child { margin-bottom: 0; }
+body.num-clauses .efes-body blockquote p::before { content: none; }
+
+hr { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
+
+img { max-width: 100%; height: auto; display: block; margin: 12px auto; }
+figure { margin: 14px 0; break-inside: avoid; }
+figcaption { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 6px; text-align: center; }
+
+dt { font-weight: 600; color: var(--ink); margin-top: 8px; }
+dd { margin: 0 0 6px 20px; }
+
+/* ===== Реквизиты и подписи сторон ===== */
+
+.efes-parties { break-inside: avoid; page-break-inside: avoid; }
+.efes-body .efes-parties h2 { margin-bottom: 14px; }
+
+.efes-parties-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.efes-party {
+  display: flex; flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.efes-party-role {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.efes-party-name { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+
+.efes-req {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  row-gap: 5px; column-gap: 10px;
+  font-size: 11.5px; line-height: 1.45;
+}
+.efes-req a { color: inherit; }
+.efes-req .k { font-family: var(--mono); font-size: 10px; color: var(--muted); padding-top: 1px; }
+
+.efes-signer-title { font-size: 11.5px; margin-top: auto; padding-top: 18px; }
+
+.efes-sign-line {
+  display: flex; align-items: flex-end; gap: 10px;
+  margin-top: 26px;
+  font-size: 12px;
+}
+.efes-sign-line div { flex-grow: 1; height: 1px; background: var(--ink); }
+.efes-sign-line span { font-weight: 600; }
