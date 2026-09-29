@@ -351,6 +351,11 @@ dd { margin: 0 0 6px 20px; }
   border-radius: 8px;
 }
 
+/* Одна сторона (КП, письмо) — карточка во всю ширину, реквизиты в две колонки */
+.efes-party:only-child { grid-column: 1 / -1; }
+.efes-party:only-child .efes-req { grid-template-columns: 64px minmax(0, 1fr) 64px minmax(0, 1fr); }
+.efes-party:only-child .efes-sign-line { width: 50%; margin-left: auto; }
+
 .efes-party-role {
   font-family: var(--mono);
   font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
